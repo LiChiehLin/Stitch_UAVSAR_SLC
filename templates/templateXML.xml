@@ -81,7 +81,7 @@
         <doc>Instance family name</doc>
     </property>
     <property name="file_name">
-        <value>ImagePath_SLCname</value>
+        <value>/ImagePath_SLCname</value>
         <doc>Name of the image file.</doc>
     </property>
     <property name="image_type">
