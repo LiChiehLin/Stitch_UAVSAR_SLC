@@ -8,7 +8,7 @@ This stitching workflow contains one C-Shell code and one Python code:
 This code will create all the necessary files `prepareUAVSAR_coregStack.py` does  
 So you can skip `prepareUAVSAR_coregStack.py` and carry on with `stackStripMap.py`  
   
-UAVSAR SLC data can be downloaded via: https://uavsar.jpl.nasa.gov/cgi-bin/data.pl  
+UAVSAR SLC data can be downloaded via: [UAVSAR Data Search](https://uavsar.jpl.nasa.gov/cgi-bin/data.pl).  
 
 ---
 ### UAVSAR_coregStack_StitchSegments.csh
@@ -18,12 +18,8 @@ Requires three input arguments
 3. Doppler file (Downloaded from NASA data portal)
 
 ---
-### Arrange the placement of data and directories  
-
-
----
 ### How to use this code
-#### For example: stitching segment 1 and 2 for UAVSAR track SanAnd_23017  
+#### For example: stitching segment 1 and 2 for UAVSAR *track SanAnd_23017*  
 1. Download UAVSAR SLC data and put everything in one directory (e.g. `data/`)
 2. Put both `UAVSAR_coregStack_StitchSegments.csh` and `MakeShelveData.py` to `data/`
 3. Prepare input files for `UAVSAR_coregStack_StitchSegments.csh`
