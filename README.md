@@ -24,14 +24,23 @@ Requires three input arguments
 ---
 ### How to use this code
 #### For example: stitching segment 1 and 2 for UAVSAR track SanAnd_23017  
-1. Download UAVSAR SLC data and put everything in one directory (e.g. `/data`)
-2. Put both `UAVSAR_coregStack_StitchSegments.csh` and `MakeShelveData.py` to `/data`
+1. Download UAVSAR SLC data and put everything in one directory (e.g. `data/`)
+2. Put both `UAVSAR_coregStack_StitchSegments.csh` and `MakeShelveData.py` to `data/`
 3. Prepare input files for `UAVSAR_coregStack_StitchSegments.csh`
    ```shell
+   cd data/
    ls *.slc > filelst
    ```
 5. Execute the code:
    ```shell
    csh UAVSAR_coregStack_StitchSegments.csh filelst 12 SanAnd_23017_01_BC.dop
    ```
-6. Carry on with `stackStripMap.py` from ISCE
+6. Create `merge/` and link `SLC/`
+   ```shell
+   cd ../
+   mkdir merged
+   cd merged
+   ln -s ../SLC/
+   cd ..
+   ```
+7. Carry on with `stackStripMap.py`
