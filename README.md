@@ -14,7 +14,7 @@ UAVSAR SLC data can be downloaded via: https://uavsar.jpl.nasa.gov/cgi-bin/data.
 ### UAVSAR_coregStack_StitchSegments.csh
 Requires three input arguments
 1. filelst (Containing all .slc filenames)
-2. combined segments (e.g. combine segment 1 and 2, then put `12`. combine segment 2, 3 and 3, then put `234`)
+2. combined segments (e.g. combine segment 1 and 2, then put `12`, combine segment 2, 3 and 3, then put `234`)
 3. Doppler file (Downloaded from NASA data portal)
 
 ---
