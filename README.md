@@ -3,11 +3,13 @@ Stitch UAVSAR SLC stack of one track to form a consecutive SLC image for InSAR t
 
 This stitching workflow contains one C-Shell code and one Python code:  
 1. `UAVSAR_coregStack_StitchSegments.csh` is the main script  
-2. `MakeShelveData.py` is the sub-routine called in the main script
+2. `MakeShelveData.py` is the sub-routine called in the main script (Scratched from ISCE source codes)  
 
 This code will create all the necessary files `prepareUAVSAR_coregStack.py` does  
 So you can skip `prepareUAVSAR_coregStack.py` and carry on with `stackStripMap.py`  
-  
+
+Make sure you have all ISCE and ISCE stack processor available in your working environment  
+
 UAVSAR SLC data can be downloaded via: [UAVSAR Data Search](https://uavsar.jpl.nasa.gov/cgi-bin/data.pl).  
 
 ---
