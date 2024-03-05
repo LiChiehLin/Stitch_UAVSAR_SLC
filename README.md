@@ -42,3 +42,7 @@ Requires three input arguments
    cd ..
    ```
 7. Carry on with `stackStripMap.py`
+
+---  
+Note that I did not seek to fully understand how ISCE processes and produces the files, as it is rather complicated.  
+I just tried to piece them together and make it automatic for processing multiple tracks of SLCs.  
