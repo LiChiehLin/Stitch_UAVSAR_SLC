@@ -10,7 +10,6 @@ from isceobj.Util import Poly1D
 from isceobj.Planet.AstronomicalHandbook import Const
 
 # Make data.bak, data.dat, data.dir files in the directory SLC/date/
-# The output of this script should not be dependent on segments as the source script from ISCE does not take segment into acount in producing relevant files
 
 # Parse the required files to the script
 parser = argparse.ArgumentParser(description='Parse annotation, Doppler, segment, output directory, stitched SLC name')
