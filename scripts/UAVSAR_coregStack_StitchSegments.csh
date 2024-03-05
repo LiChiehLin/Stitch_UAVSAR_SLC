@@ -1,19 +1,20 @@
 #!/bin/csh
-#######################################
-#                                     #
-# University of California, Riverside #
-# 				      #
-#    Earth and Planetary Sciences     #
-#				      #
-#            Li-Chieh Lin	      #
-#             2024.02.27	      #
-#######################################
+####################################################################
+#                                     				   #
+# 		University of California, Riverside 		   #
+# 				      				   #
+#    		   Earth and Planetary Sciences     		   #
+#				      				   #
+#            		   Li-Chieh Lin	      		 	   #
+#             		    2024.02.27	       		 	   #
+#                                     				   #
+# (2024.03.04)			      				   #
+# Update: Make .vrt and .xml based on ISCE code not from templates #
+####################################################################
 # Files required:
 # 1. filelist: SLC files that need to be stitched
 # 2. segments: what segments to be stitched
 # 3. doppler: The raw doppler file .dop
-# 4. template xml: It will be automatically donwloaded from github repository
-# 5. template vrt: It will be automatically downloaded from github repository
 
 if ($#argv != 3) then
   echo ""
@@ -37,19 +38,10 @@ if ($#argv != 3) then
   exit 1
 endif
 
-##### Download template xml and vrt files #####
-if (! -f templateVRT.vrt || ! -f templateXML.xml) then
-  wget https://raw.githubusercontent.com/LiChiehLin/Stitch_UAVSAR_SLC/main/templates/templateVRT.vrt
-  wget https://raw.githubusercontent.com/LiChiehLin/Stitch_UAVSAR_SLC/main/templates/templateXML.xml
-  mv templateVRT.vrt template.vrt
-  mv templateXML.xml template.xml
-endif
 
 set filelst = `echo $1`
 set segments = `echo $2`
 set dop = `echo $3`
-set xml = template
-set vrt = template
 set PWD = `pwd`
 
 ##### Make SLC/ directory #####
@@ -93,8 +85,6 @@ echo "##### Date: $date #####"
   cat $slc > ${slc_prefix}_s${segments}_${slc_suffix}
   echo ""
 
-##### Modify .vrt and .xml #####
-  echo "### Modify .vrt and .xml files"
 # Get the year for the stitched SLC file name and directory name
   set ann = `echo ${slc_prefix}.ann`
   set year = `cat $ann | grep "Start Time of Acquisition" | awk '{print $7}' | awk -F- '{print $3}'`
@@ -127,24 +117,7 @@ echo "##### Date: $date #####"
     set Y_sum = `echo $Y | sed 's/ /+/g' | bc -l`
     echo ""
     echo "Combined Rows (Y): $Y_sum"
-  cp $xml.xml $SLCdir.slc.xml
-  cp $vrt.vrt $SLCdir.slc.vrt  
 
-# Modify .vrt 
-  sed -i "s/OriginalX/$X/g" $SLCdir.slc.vrt
-  sed -i "s/OriginalY/$Y_sum/g" $SLCdir.slc.vrt
-  sed -i "s/SLCname/$SLCdir.slc/g" $SLCdir.slc.vrt
-
-# Modify .xml
-  sed -i "s/XendingValue/$X/g" $SLCdir.slc.xml
-  sed -i "s/Xsize/$X/g" $SLCdir.slc.xml
-  sed -i "s/YendingValue/$Y_sum/g" $SLCdir.slc.xml
-  sed -i "s/Ysize/$Y_sum/g" $SLCdir.slc.xml
-  sed -i "s#\ImagePath_SLCname#$SLCxml#g" $SLCdir.slc.xml
-  sed -i "s/Ylength/$Y_sum/g" $SLCdir.slc.xml
-  sed -i "s/Xwidth/$X/g" $SLCdir.slc.xml
-  sed -i "s/Xmaxnum/$X/g" $SLCdir.slc.xml
-  echo $SLCxml
 
 # Pipe external Python script to make necessary files for later run_files
 # Make a new .ann file which contains the length and width information of combined SLCs
@@ -185,15 +158,10 @@ echo "##### Date: $date #####"
   echo "Segment ${segments} Data Approximate Corner 2                      (&)             = $Approx_Corner2       ; latitude, longitude in decimal degrees" >> $ann_comb
   echo "Segment ${segments} Data Approximate Corner 3                      (&)             = $Approx_Corner3       ; latitude, longitude in decimal degrees" >> $ann_comb
   echo "Segment ${segments} Data Approximate Corner 4                      (&)             = $Approx_Corner4       ; latitude, longitude in decimal degrees" >> $ann_comb
-  python MakeShelveData.py -a $ann_comb -d $dop -s $segments -o $output
-
-# Put SLC, vrt, xml and copy ann into thier directory
-  echo ""
-  echo "### Move stitched SLC, vrt and xml to the corresponding direcotory"
-  mv $SLCdir.slc.xml $SLCstore/$SLCdir
-  mv $SLCdir.slc.vrt $SLCstore/$SLCdir
   mv ${slc_prefix}_s${segments}_${slc_suffix} $SLCdir.slc
   mv $SLCdir.slc $SLCstore/$SLCdir
+  python MakeShelveData.py -a $ann_comb -d $dop -s $segments -o $output -S $SLCstore/$SLCdir/$SLCdir.slc
+
   mv $ann_comb $SLCstore/$SLCdir
 
 set date_pre = `echo $date`
@@ -206,6 +174,5 @@ echo "-------------------------------------"
 echo "prepareUAVSAR_coregStack.py is done"
 echo "Proceed to stackStripMap.py"
 echo "-------------------------------------"
-
 
 
