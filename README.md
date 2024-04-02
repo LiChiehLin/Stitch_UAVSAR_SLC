@@ -7,6 +7,7 @@ This stitching workflow contains one C-Shell code and one Python code:
 
 This code will create all the necessary files `prepareUAVSAR_coregStack.py` does  
 So you can skip `prepareUAVSAR_coregStack.py` and carry on with `stackStripMap.py`  
+See also: [UAVSAR processing workflow by Forrest Williams](https://github.com/forrestfwilliams/UAVSAR_InSAR).  
 
 Make sure you have all ISCE and ISCE stack processor available in your working environment  
 
@@ -16,7 +17,7 @@ UAVSAR SLC data can be downloaded via: [UAVSAR Data Search](https://uavsar.jpl.n
 ### UAVSAR_coregStack_StitchSegments.csh
 Requires three input arguments
 1. filelst (Containing all .slc filenames)
-2. combined segments (e.g. combine segment 1 and 2, then put `12`, combine segment 2, 3 and 3, then put `234`)
+2. combined segments (e.g. combine segment 1 and 2, then put `12`, combine segment 2, 3 and 4, then put `234`)
 3. Doppler file (Downloaded from NASA data portal)
 
 ---
@@ -33,12 +34,16 @@ Requires three input arguments
    ```shell
    csh UAVSAR_coregStack_StitchSegments.csh filelst 12 SanAnd_23017_01_BC.dop
    ```
-6. Create `merge/` and link `SLC/`
+6. Create `merged/` and link `SLC/`. also prepare your dem file in `dem/`
    ```shell
    cd ../
    mkdir merged
    cd merged
    ln -s ../SLC/
+   cd ..
+   mkdir dem
+   cd dem
+   ln -s /YOUR_DEM .
    cd ..
    ```
 7. Carry on with `stackStripMap.py`
