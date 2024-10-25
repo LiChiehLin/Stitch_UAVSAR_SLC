@@ -30,6 +30,7 @@ Requires three input arguments
    cd data/
    ls *.slc > filelst
    ```
+4. Activate ISCE stripmap stack processor
 5. Execute the code:
    ```shell
    csh UAVSAR_coregStack_StitchSegments.csh filelst 12 SanAnd_23017_01_BC.dop
